@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NBA Live Win Probability</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <h1>NBA Live Win Probability</h1>
+    <p class="subtitle">Replay simulation from historical playoff play-by-play</p>
+  </header>
+
+  <main class="container">
+    <section class="controls card">
+      <label for="serverUrl">Backend URL</label>
+      <input id="serverUrl" type="text" value="http://127.0.0.1:5000" />
+      <div class="btn-row">
+        <button id="connectBtn" class="btn primary">Connect</button>
+        <button id="startBtn" class="btn" disabled>Start Replay</button>
+        <button id="stopBtn" class="btn danger" disabled>Stop</button>
+      </div>
+      <p id="status" class="status">Disconnected</p>
+    </section>
+
+    <section id="gameBanner" class="card game-banner hidden">
+      <p class="game-matchup" id="gameMatchup">—</p>
+      <p class="game-help" id="gameHelp">
+        Win % is always for the <strong>home</strong> team in this replay. The away team’s chance is 100% minus that number.
+      </p>
+    </section>
+
+    <section class="stats grid">
+      <div class="card stat">
+        <span class="label">Period</span>
+        <span id="period" class="value">—</span>
+      </div>
+      <div class="card stat">
+        <span class="label">Time left (game clock)</span>
+        <span id="timeRemaining" class="value">—</span>
+      </div>
+      <div class="card stat">
+        <span class="label">Score</span>
+        <span id="score" class="value">—</span>
+        <span id="scoreSub" class="sub">Home listed first after replay starts</span>
+      </div>
+      <div class="card stat highlight">
+        <span class="label" id="homeProbLabel">Home team win chance</span>
+        <span id="winProb" class="value">—</span>
+        <span id="awayProb" class="sub">—</span>
+      </div>
+    </section>
+
+    <section class="card chart-card">
+      <h2 id="chartTitle">Home team win chance over time</h2>
+      <canvas id="probChart"></canvas>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
